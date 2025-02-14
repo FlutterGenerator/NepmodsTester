@@ -45,5 +45,5 @@ jobs:
       - name: Upload APK (${{ matrix.build_type }})
         uses: actions/upload-artifact@v4
         with:
-          name: disassembler-apk-${{ matrix.build_type }}
+          name: NepmodsTester-apk-${{ matrix.build_type }}
           path: app/build/outputs/apk/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk
