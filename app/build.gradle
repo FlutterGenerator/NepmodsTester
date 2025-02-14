@@ -19,16 +19,15 @@ android {
             debug {
                 storeFile file('HunMod.jks')
                 keyAlias 'HunMod'
-                storePassword 'HunMod'
-                keyPassword 'HunMod'
+                storePassword System.getenv("HunMod")
+                keyPassword System.getenv("HunMod")
             }
         }
-
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
