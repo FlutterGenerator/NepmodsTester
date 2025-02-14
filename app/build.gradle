@@ -13,9 +13,17 @@ android {
         versionName "V3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
-        signingConfig signingConfigs.debug
+        signingConfigs {
+            debug {
+                storeFile file('HunMod.jks')
+                keyAlias 'HunMod'
+                storePassword 'HunMod'
+                keyPassword 'HunMod'
+            }
+        }
+
     }
 
     buildTypes {
