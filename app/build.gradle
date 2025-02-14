@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace 'Nepmods.Tester'
+
     compileSdkVersion 34
+
     defaultConfig {
         applicationId "Nepmods.Tester"
         minSdkVersion 19
@@ -14,6 +17,7 @@ android {
         }
         signingConfig signingConfigs.debug
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -24,14 +28,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     externalNativeBuild {
         ndkBuild {
             path file('src/main/jni/Android.mk')
         }
     }
+
     ndkVersion = '28.0.13004108'
+
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
     }
 }
-
