@@ -99,16 +99,16 @@ public final class CrashHandler {
                 }
 
                 StringBuilder devInfo = new StringBuilder();
-                devInfo.append("************* Crash Head ****************");
-                devInfo.append("Time Of Crash:").append(time).append("");
-                devInfo.append("Device Manufacturer:").append(Build.MANUFACTURER).append("");
-                devInfo.append("Device Model:").append(Build.MODEL).append("");
-                devInfo.append("Android Version:").append(Build.VERSION.RELEASE).append("");
-                devInfo.append("Android SDK:").append(Build.VERSION.SDK_INT).append("");
-                devInfo.append("App VersionName:").append(versionName).append("");
-                devInfo.append("App VersionCode:").append(versionCode).append("");
-                devInfo.append("************* Crash Head ****************");
-                devInfo.append("").append(fullStackTrace);
+                devInfo.append("************* Crash Head ****************\n");
+                devInfo.append("Time Of Crash      : ").append(time).append("\n");
+                devInfo.append("Device Manufacturer: ").append(Build.MANUFACTURER).append("\n");
+                devInfo.append("Device Model       : ").append(Build.MODEL).append("\n");
+                devInfo.append("Android Version    : ").append(Build.VERSION.RELEASE).append("\n");
+                devInfo.append("Android SDK        : ").append(Build.VERSION.SDK_INT).append("\n");
+                devInfo.append("App VersionName    : ").append(versionName).append("\n");
+                devInfo.append("App VersionCode    : ").append(versionCode).append("\n");
+                devInfo.append("************* Crash Head ****************\n");
+                devInfo.append("\n").append(fullStackTrace);
 
                 String errorLog = devInfo.toString();
 
@@ -118,7 +118,7 @@ public final class CrashHandler {
                 }
 
                 Toast.makeText(app, "Game has crashed unexpectedly", Toast.LENGTH_LONG).show();
-                Toast.makeText(app, "Log saved to:" + String.valueOf(crashFile).replace("/storage/emulated/0/", ""), Toast.LENGTH_LONG).show();
+                Toast.makeText(app, "Log saved to: " + String.valueOf(crashFile).replace("/storage/emulated/0/", ""), Toast.LENGTH_LONG).show();
 
                 Log.e("AppCrash", "Done");
 

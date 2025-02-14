@@ -724,7 +724,7 @@ public class Menu {
 
             public void onClick(View v) {
                 Preferences.changeFeatureBool(finalfeatName, featNum, isOn);
-                //Log.d(TAG, finalfeatName + "" + featNum + "" + isActive2);
+                //Log.d(TAG, finalfeatName + " " + featNum + " " + isActive2);
                 if (isOn) {
                     button.setText(Html.fromHtml(finalfeatName + ": ON"));
                     button.setBackgroundColor(BtnON);
@@ -740,8 +740,8 @@ public class Menu {
     }
 
     private void Spinner(LinearLayout linLayout, final int featNum, final String featName, final String list) {
-        Log.d(TAG, "spinner " + featNum + "" + featName + "" + list);
-        final List<String> lists = new LinkedList<>(Arrays.asList(list.split("")));
+        Log.d(TAG, "spinner " + featNum + " " + featName + " " + list);
+        final List<String> lists = new LinkedList<>(Arrays.asList(list.split(",")));
 
         // Create another LinearLayout as a workaround to use it as a background
         // to keep the down arrow symbol. No arrow symbol if setBackgroundColor set
@@ -1120,7 +1120,7 @@ public class Menu {
 
     private void RadioButton(LinearLayout linLayout, final int featNum, String featName, final String list) {
         //Credit: LoraZalora
-        final List<String> lists = new LinkedList<>(Arrays.asList(list.split("")));
+        final List<String> lists = new LinkedList<>(Arrays.asList(list.split(",")));
 
         final TextView textView = new TextView(getContext);
         textView.setText(featName + ":");
