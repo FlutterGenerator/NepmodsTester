@@ -17,10 +17,10 @@ android {
         }
         signingConfigs {
             debug {
-                storeFile file('HunMod.jks')
-                keyAlias 'HunMod'
-                storePassword System.getenv("HunMod")
-                keyPassword System.getenv("HunMod")
+            storeFile file('HunMod.jks')
+            storePassword 'HunMod'
+            keyAlias 'HunMod'
+            keyPassword 'HunMod'
             }
         }
     }
