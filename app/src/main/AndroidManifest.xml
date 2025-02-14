@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="Nepmods.Tester">
+
+    <!-- This app can appear on top of other apps -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!-- have full network access -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="Nepmods Tester V3"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true">
+
+        <activity
+            android:name="Nepmods.Tester.MainActivity"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+
+            </intent-filter>
+
+        </activity>
+
+        <service
+            android:name="Nepmods.Tester.FloatingModMenuService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="true"/>
+
+    </application>
+
+</manifest>
