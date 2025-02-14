@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - master
-  workflow_dispatch:  # Позволяет вручную запускать workflow
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        android_variant: [debug]  # Оставляем только debug сборку
+        build_type: [debug, release]
 
     steps:
       # 1. Клонирование репозитория
@@ -29,36 +29,21 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      # 3. Установка Gradle 8.12
-      - name: Set up Gradle 8.12
-        run: |
-          wget https://services.gradle.org/distributions/gradle-8.12-bin.zip
-          unzip gradle-8.12-bin.zip
-          mv gradle-8.12 /opt/gradle
-          echo "PATH=/opt/gradle/bin:$PATH" >> $GITHUB_ENV
-          
-      # 4. Проверка и создание Gradle Wrapper, если он отсутствует
-      - name: Ensure Gradle Wrapper exists
-        run: |
-          if [ ! -f "./gradlew" ]; then
-            echo "gradlew not found, creating Gradle Wrapper"
-            /opt/gradle/bin/gradle wrapper --gradle-version 8.12  # Используем полный путь к gradle
-            chmod +x gradlew
-          fi
+      # 3. Установка прав на выполнение gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
-      # 5. Сборка APK с помощью Gradle
-      - name: Build APK
-        run: |
-          ./gradlew assemble${{ matrix.android_variant }}  # Сборка только debug
+      # 4. Сборка APK
+      - name: Build APK (${{ matrix.build_type }})
+        run: ./gradlew assemble${{ matrix.build_type == 'debug' && 'Debug' || 'Release' }}
 
-      # 6. Проверка содержимого директории с APK (для отладки)
+      # 5. Проверка содержимого директории с APK
       - name: Check APK build outputs
-        run: |
-          ls -R app/build/outputs/apk/
+        run: ls -R app/build/outputs/apk/
 
-      # 7. Загрузка артефактов APK
-      - name: Upload APK
+      # 6. Загрузка артефактов APK
+      - name: Upload APK (${{ matrix.build_type }})
         uses: actions/upload-artifact@v4
         with:
-          name: disassembler-apk-${{ matrix.android_variant }}
-          path: app/build/outputs/apk/${{ matrix.android_variant }}/app-${{ matrix.android_variant }}.apk
+          name: disassembler-apk-${{ matrix.build_type }}
+          path: app/build/outputs/apk/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk
