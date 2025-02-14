@@ -13,10 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        build_type: [debug, release]
-
     steps:
       # 1. Клонирование репозитория
       - name: Checkout repository
@@ -33,17 +29,32 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 4. Сборка APK
-      - name: Build APK (${{ matrix.build_type }})
-        run: ./gradlew assemble${{ matrix.build_type == 'debug' && 'Debug' || 'Release' }}
+      # 4. Сборка Debug APK
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
 
-      # 5. Проверка содержимого директории с APK
-      - name: Check APK build outputs
-        run: ls -R app/build/outputs/apk/
+      # 5. Проверка содержимого директории с APK (Debug)
+      - name: Check Debug APK build outputs
+        run: ls -R app/build/outputs/apk/debug
 
-      # 6. Загрузка артефактов APK
-      - name: Upload APK (${{ matrix.build_type }})
+      # 6. Загрузка Debug APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: NepmodsTester-apk-${{ matrix.build_type }}
-          path: app/build/outputs/apk/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk
+          name: NepmodsTester-apk-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      # 7. Сборка Release APK
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      # 8. Проверка содержимого директории с APK (Release)
+      - name: Check Release APK build outputs
+        run: ls -R app/build/outputs/apk/release
+
+      # 9. Загрузка Release APK
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NepmodsTester-apk-release
+          path: app/build/outputs/apk/release/app-release.apk
