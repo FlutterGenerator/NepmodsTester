@@ -19,49 +19,28 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Set up Gradle 8.12
-        run: |
-          wget https://services.gradle.org/distributions/gradle-8.12-bin.zip
-          unzip gradle-8.12-bin.zip
-          sudo mv gradle-8.12 /opt/gradle
-          echo "PATH=/opt/gradle/bin:$PATH" >> $GITHUB_ENV
-
-      - name: Ensure Gradle Wrapper exists
-        run: |
-          if [ ! -f "./gradlew" ]; then
-            echo "gradlew not found, creating Gradle Wrapper"
-            /opt/gradle/bin/gradle wrapper --gradle-version 8.12
-            chmod +x gradlew
-          fi
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v3
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
+      - name: Build APK
+        run: ./gradlew assemble${{ matrix.build_type }}
 
-      - name: Check Debug APK build outputs
-        run: ls -R app/build/outputs/apk/debug
+      - name: Check APK build outputs
+        run: ls -R app/build/outputs/apk/${{ matrix.build_type }}
 
-      - name: Upload Debug APK
+      - name: Create separate folder for APK
+        run: mkdir -p artifacts/${{ matrix.build_type }} && cp app/build/outputs/apk/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk artifacts/${{ matrix.build_type }}/
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: NepmodsTester-apk-debug-${{ github.run_id }}
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Build Release APK
-        run: ./gradlew assembleRelease
-
-      - name: Check Release APK build outputs
-        run: ls -R app/build/outputs/apk/release
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: NepmodsTester-apk-release-${{ github.run_id }}
-          path: app/build/outputs/apk/release/app-release.apk
+          name: NepmodsTester-apk-${{ matrix.build_type }}-${{ github.run_id }}
+          path: artifacts/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk
