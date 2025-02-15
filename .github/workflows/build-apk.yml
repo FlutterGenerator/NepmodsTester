@@ -1,4 +1,4 @@
-name: Android Build
+name: NepmodsTester Build
 
 on:
   pull_request:
