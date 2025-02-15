@@ -57,7 +57,8 @@ android {
         }
     }
 
-    ndkVersion = "28.0.13004108" // ✅ Кавычки обязательны
+    ndkVersion = "28.0.13004108"
+    compileSdk 35// ✅ Кавычки обязательны
 }
 
 dependencies {
