@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - master
-  workflow_dispatch:  # Позволяет вручную запускать workflow
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        android_variant: [debug, release]  # Сборки как debug, так и release
+        android_variant: [debug, release]
 
     steps:
       # 1. Клонирование репозитория
@@ -29,38 +29,61 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      # 3. Установка Gradle 8.12
+      # 3. Установка Android SDK и принятие лицензий
+      - name: Set up Android SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+
+          export ANDROID_HOME=$HOME/android-sdk
+          export CMDLINE_TOOLS=$ANDROID_HOME/cmdline-tools/latest
+          
+          mkdir -p $CMDLINE_TOOLS
+          cd $ANDROID_HOME/cmdline-tools
+          
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
+          unzip -q commandlinetools-linux-10406996_latest.zip -d .
+          mv cmdline-tools latest
+          rm commandlinetools-linux-10406996_latest.zip
+
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "PATH=$CMDLINE_TOOLS/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH" >> $GITHUB_ENV
+
+          yes | $CMDLINE_TOOLS/bin/sdkmanager --licenses
+          $CMDLINE_TOOLS/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;36.0.0-rc5"
+
+      # 4. Установка Gradle 8.12
       - name: Set up Gradle 8.12
         run: |
-          wget https://services.gradle.org/distributions/gradle-8.12-bin.zip
+          wget -q https://services.gradle.org/distributions/gradle-8.12-bin.zip
           unzip gradle-8.12-bin.zip
           mv gradle-8.12 /opt/gradle
           echo "PATH=/opt/gradle/bin:$PATH" >> $GITHUB_ENV
 
-      # 4. Проверка и создание Gradle Wrapper, если он отсутствует
+      # 5. Проверка наличия Gradle Wrapper
       - name: Ensure Gradle Wrapper exists
         run: |
           if [ ! -f "./gradlew" ]; then
             echo "gradlew not found, creating Gradle Wrapper"
-            /opt/gradle/bin/gradle wrapper --gradle-version 8.12  # Используем полный путь к gradle
+            /opt/gradle/bin/gradle wrapper --gradle-version 8.12
             chmod +x gradlew
           fi
 
-      # 5. Установка прав на выполнение для gradlew
+      # 6. Установка прав для gradlew
       - name: Set execute permissions for gradlew
         run: chmod +x ./gradlew
 
-      # 6. Сборка APK с помощью Gradle
+      # 7. Сборка APK
       - name: Build APK
         run: |
-          ./gradlew assemble${{ matrix.android_variant }}  # Сборка как debug, так и release
+          ./gradlew assemble${{ matrix.android_variant }}
 
-      # 7. Проверка содержимого директории с APK (для отладки)
+      # 8. Проверка содержимого APK
       - name: Check APK build outputs
-        run: |
-          ls -R app/build/outputs/apk/
+        run: ls -R app/build/outputs/apk/
 
-      # 8. Загрузка артефактов APK
+      # 9. Загрузка APK как артефакта
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
