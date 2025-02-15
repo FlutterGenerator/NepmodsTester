@@ -1,91 +1,68 @@
-name: Build APK for NepmodsTester
-
-on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
+  workflow_dispatch:  # Позволяет вручную запускать workflow
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+
+@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        android_variant: [debug, release]
+        android_variant: [debug]  # Оставляем только debug сборку
+        build_type: [debug, release]
 
     steps:
       # 1. Клонирование репозитория
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      # 2. Установка JDK 21
-      - name: Set up Java 21
-        uses: actions/setup-java@v4
-        with:
+@@ -29,36 +29,21 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      # 3. Установка Android SDK и принятие лицензий
-      - name: Set up Android SDK
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-
-          export ANDROID_HOME=$HOME/android-sdk
-          export CMDLINE_TOOLS=$ANDROID_HOME/cmdline-tools/latest
-          
-          mkdir -p $CMDLINE_TOOLS
-          cd $ANDROID_HOME/cmdline-tools
-          
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
-          unzip -q commandlinetools-linux-10406996_latest.zip -d .
-          mv cmdline-tools latest
-          rm commandlinetools-linux-10406996_latest.zip
-
-          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "PATH=$CMDLINE_TOOLS/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH" >> $GITHUB_ENV
-
-          yes | $CMDLINE_TOOLS/bin/sdkmanager --licenses
-          $CMDLINE_TOOLS/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;36.0.0-rc5"
-
-      # 4. Установка Gradle 8.12
+      # 3. Установка Gradle 8.12
       - name: Set up Gradle 8.12
         run: |
-          wget -q https://services.gradle.org/distributions/gradle-8.12-bin.zip
+          wget https://services.gradle.org/distributions/gradle-8.12-bin.zip
           unzip gradle-8.12-bin.zip
           mv gradle-8.12 /opt/gradle
           echo "PATH=/opt/gradle/bin:$PATH" >> $GITHUB_ENV
-
-      # 5. Проверка наличия Gradle Wrapper
+          
+      # 4. Проверка и создание Gradle Wrapper, если он отсутствует
       - name: Ensure Gradle Wrapper exists
         run: |
           if [ ! -f "./gradlew" ]; then
             echo "gradlew not found, creating Gradle Wrapper"
-            /opt/gradle/bin/gradle wrapper --gradle-version 8.12
+            /opt/gradle/bin/gradle wrapper --gradle-version 8.12  # Используем полный путь к gradle
             chmod +x gradlew
           fi
-
-      # 6. Установка прав для gradlew
-      - name: Set execute permissions for gradlew
+      # 3. Установка прав на выполнение gradlew
+      - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 7. Сборка APK
+      # 5. Сборка APK с помощью Gradle
       - name: Build APK
         run: |
-          ./gradlew assemble${{ matrix.android_variant }}
+          ./gradlew assemble${{ matrix.android_variant }}  # Сборка только debug
+      # 4. Сборка APK
+      - name: Build APK (${{ matrix.build_type }})
+        run: ./gradlew assemble${{ matrix.build_type == 'debug' && 'Debug' || 'Release' }}
 
-      # 8. Проверка содержимого APK
+      # 6. Проверка содержимого директории с APK (для отладки)
+      # 5. Проверка содержимого директории с APK
       - name: Check APK build outputs
+        run: |
+          ls -R app/build/outputs/apk/
         run: ls -R app/build/outputs/apk/
 
-      # 9. Загрузка APK как артефакта
+      # 7. Загрузка артефактов APK
       - name: Upload APK
+      # 6. Загрузка артефактов APK
+      - name: Upload APK (${{ matrix.build_type }})
         uses: actions/upload-artifact@v4
         with:
-          name: NepmodsTester-apk-${{ matrix.android_variant }}
+          name: disassembler-apk-${{ matrix.android_variant }}
           path: app/build/outputs/apk/${{ matrix.android_variant }}/app-${{ matrix.android_variant }}.apk
+          name: disassembler-apk-${{ matrix.build_type }}
+          path: app/build/outputs/apk/${{ matrix.build_type }}/app-${{ matrix.build_type }}.apk
