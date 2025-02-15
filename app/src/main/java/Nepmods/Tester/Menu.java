@@ -158,8 +158,8 @@ public class Menu {
         //********** The box of the mod menu **********
         mExpanded = new LinearLayout(context); // Menu markup (when the menu is expanded)
         mExpanded.setVisibility(View.GONE);
-        
-        
+
+
         mExpanded.setOrientation(LinearLayout.VERTICAL);
         // mExpanded.setPadding(1, 1, 1, 1); //So borders would be visible
         mExpanded.setLayoutParams(new LinearLayout.LayoutParams(dp(300), dp(360)));
@@ -167,12 +167,12 @@ public class Menu {
         gdMenuBody.setCornerRadius(MENU_CORNER); //Set corner
         gdMenuBody.setColor(Color.parseColor("#d500f9"));
         gdMenuBody.setStroke(10, Color.parseColor("#9c26b0")); //Set border
-       //mExpanded.setBackground(gdMenuBody); //Apply GradientDrawable to it
+        //mExpanded.setBackground(gdMenuBody); //Apply GradientDrawable to it
         mExpanded.setBackground(Drawable.createFromPath(cacheDir + "img.png"));
         //********** The icon to open mod menu **********
         startimage = new ImageView(context);
         startimage.setLayoutParams(new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
-        int applyDimension = (int) TypedValue.applyDimension(1, ICON_SIZE, context.getResources().getDisplayMetrics()); //Icon size
+        int applyDimension = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ICON_SIZE, context.getResources().getDisplayMetrics()); //Icon size
         startimage.getLayoutParams().height = applyDimension;
         startimage.getLayoutParams().width = applyDimension;
         //startimage.requestLayout();
@@ -192,7 +192,7 @@ public class Menu {
         //********** The icon in Webview to open mod menu **********
         WebView wView = new WebView(context); //Icon size width=\"50\" height=\"50\"
         wView.setLayoutParams(new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
-        int applyDimension2 = (int) TypedValue.applyDimension(1, ICON_SIZE, context.getResources().getDisplayMetrics()); //Icon size
+        int applyDimension2 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ICON_SIZE, context.getResources().getDisplayMetrics()); //Icon size
         wView.getLayoutParams().height = applyDimension2;
         wView.getLayoutParams().width = applyDimension2;
         wView.loadData("<html>" +
@@ -292,7 +292,7 @@ public class Menu {
         ICAACCE.setColor(trans);
         ICAACCE.setCornerRadii(new float[] { 0, 0, 50, 50, 0, 0, 0, 0 });
         ICAACCE.setStroke(3, Color.MAGENTA);
-		hideBtn.setBackground(ICAACCE);
+        hideBtn.setBackground(ICAACCE);
         hideBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 mCollapsed.setVisibility(View.VISIBLE);
@@ -324,7 +324,7 @@ public class Menu {
         DAJHEFD.setCornerRadii(new float[] { 50, 50, 10, 10, 10, 10, 10, 10 });
         DAJHEFD.setStroke(3, Color.MAGENTA);
         closeBtn.setBackground(DAJHEFD);
-        
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 mCollapsed.setVisibility(View.VISIBLE);
@@ -659,7 +659,7 @@ public class Menu {
         button.setBackground(DAJHEFD);
         button.setAllCaps(false); //Disable caps to support html
         button.setText(Html.fromHtml(featName));
-        
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switch (featNum) {
@@ -765,7 +765,7 @@ public class Menu {
         //Setting the ArrayAdapter data on the Spinner'
         spinner.setAdapter(aa);
         spinner.setSelection(Preferences.loadPrefInt(featName, featNum));
-        
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -797,7 +797,7 @@ public class Menu {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertName = new AlertDialog.Builder(getContext);
-                
+
                 final EditText editText = new EditText(getContext);
                 if (maxValue != 0)
                     editText.setHint("Max value: " + maxValue);
@@ -825,7 +825,7 @@ public class Menu {
                 layoutName.setOrientation(LinearLayout.VERTICAL);
                 layoutName.addView(editText); // displays the user input bar
                 alertName.setView(layoutName);
-                         alertName.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertName.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int num;
                         try {
@@ -865,7 +865,7 @@ public class Menu {
         });
 
         linearLayout.addView(button);
-        
+
         linLayout.addView(linearLayout);
     }
     private void TextField(LinearLayout linlayout, final int featNum, final String featName, final boolean numOnly, final int maxValue) {
@@ -890,111 +890,111 @@ public class Menu {
         button.setBackgroundColor(BTN_COLOR);
         button.setTextColor(TEXT_COLOR_2);
         button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final AlertDialog alert = new AlertDialog.Builder(getContext, 2).create();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        Objects.requireNonNull(alert.getWindow()).setType(Build.VERSION.SDK_INT >= 26 ? 2038 : 2002);
-                    }
-                    alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            public void onCancel(DialogInterface dialog) {
-                                InputMethodManager imm = (InputMethodManager) getContext.getSystemService(getContext.INPUT_METHOD_SERVICE);
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                            }
-                        });
-
-                    //LinearLayout
-                    LinearLayout linearLayout1 = new LinearLayout(getContext);
-                    linearLayout1.setPadding(5, 5, 5, 5);
-                    linearLayout1.setOrientation(LinearLayout.VERTICAL);
-                    linearLayout1.setBackgroundColor(MENU_FEATURE_BG_COLOR);
-
-                    //TextView
-                    final TextView TextViewNote = new TextView(getContext);
-                    TextViewNote.setText("Tap OK to apply changes. Tap outside to cancel");
-                    if (maxValue != 0)
-                        TextViewNote.setText("Tap OK to apply changes. Tap outside to cancel" + maxValue);
-                    TextViewNote.setTextColor(TEXT_COLOR_2);
-
-                    //Edit text
-                    final EditText edittext = new EditText(getContext);
-                    edittext.setMaxLines(1);
-                    edittext.setWidth(convertDipToPixels(300));
-                    edittext.setTextColor(TEXT_COLOR_2);
-                    if (numOnly) {
-                        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        edittext.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
-                        InputFilter[] FilterArray = new InputFilter[1];
-                        FilterArray[0] = new InputFilter.LengthFilter(10);
-                        edittext.setFilters(FilterArray);
-                    } else {
-                        edittext.setText(edittextstring.getString());
-                    }
-                    edittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(View v, boolean hasFocus) {
-                                InputMethodManager imm = (InputMethodManager) getContext.getSystemService(getContext.INPUT_METHOD_SERVICE);
-                                if (hasFocus) {
-                                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                                } else {
-                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                }
-                            }
-                        });
-                    edittext.requestFocus();
-
-                    //Button
-                    Button btndialog = new Button(getContext);
-                    btndialog.setBackgroundColor(BTN_COLOR);
-                    btndialog.setTextColor(TEXT_COLOR_2);
-                    btndialog.setText("OK");
-                    btndialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (numOnly) {
-                                    int num;
-                                    try {
-                                        num = Integer.parseInt(TextUtils.isEmpty(edittext.getText().toString()) ? "0" : edittext.getText().toString());
-                                        if (maxValue != 0 &&  num >= maxValue)
-                                            num = maxValue;
-                                    } catch (NumberFormatException ex) {
-                                        num = 2147483640;
-                                    }
-                                    edittextnum.setNum(num);
-                                    button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + num + "</font>"));
-                                    alert.dismiss();
-                                    Preferences.changeFeatureInt(featName, featNum, num);
-                                } else {
-                                    String str = edittext.getText().toString();
-                                    edittextstring.setString(edittext.getText().toString());
-                                    button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + str + "</font>"));
-                                    alert.dismiss();
-                                    Preferences.changeFeatureString(featName, featNum, str);
-                                }
-                                edittext.setFocusable(false);
-                            }
-                        });
-
-                    linearLayout1.addView(TextViewNote);
-                    linearLayout1.addView(edittext);
-                    linearLayout1.addView(btndialog);
-                    android.graphics.drawable.GradientDrawable DAJHEFD = new android.graphics.drawable.GradientDrawable();
-                    DAJHEFD.setColor(trans);
-                    DAJHEFD.setStroke(3, Color.CYAN);
-                    DAJHEFD.setCornerRadii(new float[] { 50, 50, 30, 30, 30, 30, 30, 30 });
-                    btndialog.setBackground(DAJHEFD);
-                    android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
-                    HGFDACI.setCornerRadius(100);
-                    HGFDACI.setColor(Color.parseColor("#0000ffff"));
-                    HGFDACI.setStroke(2, Color.parseColor("GREEN"));
-                    android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
-
-                    edittext.setBackground(HGFDACI_RE);
-                    
-                    alert.setView(linearLayout1);
-                    alert.show();
+            @Override
+            public void onClick(View view) {
+                final AlertDialog alert = new AlertDialog.Builder(getContext, 2).create();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    Objects.requireNonNull(alert.getWindow()).setType(Build.VERSION.SDK_INT >= 26 ? 2038 : 2002);
                 }
-            });
+                alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+                        InputMethodManager imm = (InputMethodManager) getContext.getSystemService(getContext.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    }
+                });
+
+                //LinearLayout
+                LinearLayout linearLayout1 = new LinearLayout(getContext);
+                linearLayout1.setPadding(5, 5, 5, 5);
+                linearLayout1.setOrientation(LinearLayout.VERTICAL);
+                linearLayout1.setBackgroundColor(MENU_FEATURE_BG_COLOR);
+
+                //TextView
+                final TextView TextViewNote = new TextView(getContext);
+                TextViewNote.setText("Tap OK to apply changes. Tap outside to cancel");
+                if (maxValue != 0)
+                    TextViewNote.setText("Tap OK to apply changes. Tap outside to cancel" + maxValue);
+                TextViewNote.setTextColor(TEXT_COLOR_2);
+
+                //Edit text
+                final EditText edittext = new EditText(getContext);
+                edittext.setMaxLines(1);
+                edittext.setWidth(convertDipToPixels(300));
+                edittext.setTextColor(TEXT_COLOR_2);
+                if (numOnly) {
+                    edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    edittext.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
+                    InputFilter[] FilterArray = new InputFilter[1];
+                    FilterArray[0] = new InputFilter.LengthFilter(10);
+                    edittext.setFilters(FilterArray);
+                } else {
+                    edittext.setText(edittextstring.getString());
+                }
+                edittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        InputMethodManager imm = (InputMethodManager) getContext.getSystemService(getContext.INPUT_METHOD_SERVICE);
+                        if (hasFocus) {
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                        } else {
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        }
+                    }
+                });
+                edittext.requestFocus();
+
+                //Button
+                Button btndialog = new Button(getContext);
+                btndialog.setBackgroundColor(BTN_COLOR);
+                btndialog.setTextColor(TEXT_COLOR_2);
+                btndialog.setText("OK");
+                btndialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (numOnly) {
+                            int num;
+                            try {
+                                num = Integer.parseInt(TextUtils.isEmpty(edittext.getText().toString()) ? "0" : edittext.getText().toString());
+                                if (maxValue != 0 &&  num >= maxValue)
+                                    num = maxValue;
+                            } catch (NumberFormatException ex) {
+                                num = 2147483640;
+                            }
+                            edittextnum.setNum(num);
+                            button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + num + "</font>"));
+                            alert.dismiss();
+                            Preferences.changeFeatureInt(featName, featNum, num);
+                        } else {
+                            String str = edittext.getText().toString();
+                            edittextstring.setString(edittext.getText().toString());
+                            button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + str + "</font>"));
+                            alert.dismiss();
+                            Preferences.changeFeatureString(featName, featNum, str);
+                        }
+                        edittext.setFocusable(false);
+                    }
+                });
+
+                linearLayout1.addView(TextViewNote);
+                linearLayout1.addView(edittext);
+                linearLayout1.addView(btndialog);
+                android.graphics.drawable.GradientDrawable DAJHEFD = new android.graphics.drawable.GradientDrawable();
+                DAJHEFD.setColor(trans);
+                DAJHEFD.setStroke(3, Color.CYAN);
+                DAJHEFD.setCornerRadii(new float[] { 50, 50, 30, 30, 30, 30, 30, 30 });
+                btndialog.setBackground(DAJHEFD);
+                android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
+                HGFDACI.setCornerRadius(100);
+                HGFDACI.setColor(Color.parseColor("#0000ffff"));
+                HGFDACI.setStroke(2, Color.parseColor("GREEN"));
+                android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
+
+                edittext.setBackground(HGFDACI_RE);
+
+                alert.setView(linearLayout1);
+                alert.show();
+            }
+        });
 
         linearLayout.addView(button);
         android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
@@ -1005,9 +1005,9 @@ public class Menu {
 
         button.setBackground(HGFDACI_RE);
         linlayout.addView(linearLayout);
-        
+
     }
-    
+
     private void InputText(LinearLayout linLayout, final int featNum, final String featName) {
         LinearLayout linearLayout = new LinearLayout(getContext);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
@@ -1027,9 +1027,9 @@ public class Menu {
         HGFDACI.setColor(Color.parseColor("#0000ffff"));
         HGFDACI.setStroke(2, Color.parseColor("GREEN"));
         android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
-       
+
         button.setBackground(HGFDACI_RE);
-        
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1097,7 +1097,7 @@ public class Menu {
         textView.setPadding(0, 5, 0, 5);
         linLayout.addView(textView);
     }
-    
+
     private void CheckBox(LinearLayout linLayout, final int featNum, final String featName, boolean switchedOn) {
         final CheckBox checkBox = new CheckBox(getContext);
         checkBox.setText(featName);
@@ -1178,7 +1178,7 @@ public class Menu {
         DAJHEFD.setStroke(3, Color.parseColor("#e64918"));
         DAJHEFD.setCornerRadii(new float[] { 50, 50, 30, 30, 30, 30, 30, 30 });
         collapse.setBackground(DAJHEFD);
-        
+
         final TextView textView = new TextView(getContext);
         textView.setBackgroundColor(trans);
         textView.setText(text + " ▽");
@@ -1191,7 +1191,7 @@ public class Menu {
             collapseSub.setVisibility(View.VISIBLE);
             textView.setText( text + " △");
             DAJHEFD.setStroke(3, Color.parseColor("#3c5afe"));
-            
+
         }
 
         textView.setOnClickListener(new View.OnClickListener() {
@@ -1206,13 +1206,13 @@ public class Menu {
                     collapseSub.setVisibility(View.VISIBLE);
                     textView.setText(text + " △");
                     DAJHEFD.setStroke(3, Color.parseColor("#3c5afe"));
-                    
+
                     return;
                 }
                 collapseSub.setVisibility(View.GONE);
                 textView.setText(text + " ▽");
                 DAJHEFD.setStroke(3, Color.parseColor("#e64918"));
-                
+
             }
         });
         collapse.addView(textView);
