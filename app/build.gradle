@@ -39,14 +39,14 @@ android {
             minifyEnabled = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             signingConfig = signingConfigs.release
-            debuggable true
-            // ✅ Исправленный синтаксис
+            debuggable false
         }
         debug {
             minifyEnabled = false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             signingConfig = signingConfigs.debug
             debuggable true
+            // ✅ Исправленный синтаксис
         }
     }
 
