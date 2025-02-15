@@ -8,6 +8,7 @@ android {
     defaultConfig {
         applicationId = "Nepmods.Tester"
         minSdk = 21
+        targetSdk = 35
         compileSdk = 35
         // ✅ Исправленный синтаксис
         versionCode = 35
