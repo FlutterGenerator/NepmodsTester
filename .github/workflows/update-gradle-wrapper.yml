@@ -1,29 +1,15 @@
 name: Update Gradle Wrapper
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * 0" # Запуск каждое воскресенье в 00:00 UTC
+on: workflow_dispatch: schedule: - cron: "0 0 * * 0"
 
-jobs:
-  update-gradle-wrapper:
-    runs-on: ubuntu-latest
+jobs: update-gradle-wrapper: runs-on: ubuntu-latest
 
-    steps:
-      - name: Очистка кеша Git
-        run: git fetch --prune --unshallow || true
+steps:
+  - uses: actions/checkout@v4
 
-      - name: Клонирование репозитория
-        uses: actions/checkout@v4
+  - name: Update Gradle Wrapper
+    uses: gradle-update/update-gradle-wrapper-action@v2
+    with:
+      repo-token: ${{ secrets.GITHUB_TOKEN }}
+      set-distribution-checksum: false
 
-      - name: Проверка наличия gradlew
-        run: ls -l gradlew || echo "⚠️ Файл gradlew не найден!"
-
-      - name: Сделать gradlew исполняемым (если он есть)
-        run: chmod +x gradlew || true
-
-      - name: Обновление Gradle Wrapper
-        uses: gradle-update/update-gradle-wrapper-action@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          set-distribution-checksum: false
