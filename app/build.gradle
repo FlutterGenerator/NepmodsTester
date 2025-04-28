@@ -9,8 +9,8 @@ android {
         applicationId = "Nepmods.Tester"
         minSdk = 21
         targetSdk = 35
-        compileSdk = 35
-        // ✅ Исправленный синтаксис
+        compileSdk = 35 // Это можно оставить здесь, так как вы уже указываете compileSdk в другом месте
+
         versionCode = 35
         versionName = "V3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" // ✅ Актуальный тестовый раннер
@@ -18,6 +18,11 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     signingConfigs {
@@ -47,7 +52,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             signingConfig = signingConfigs.debug
             debuggable true
-            // ✅ Исправленный синтаксис
         }
     }
 
@@ -58,7 +62,6 @@ android {
     }
 
     ndkVersion = "28.0.13004108"
-    compileSdk 35// ✅ Кавычки обязательны
 }
 
 dependencies {
