@@ -11,7 +11,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        mavenCentral() // ✅ jcenter() заменён
+        mavenCentral()
+    }
+
+    // 🔐 Добавлено: Принудительное обновление уязвимого netty-handler
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'io.netty' && details.requested.name == 'netty-handler') {
+                details.useVersion '4.1.94.Final'
+            }
+        }
     }
 }
 
