@@ -16,7 +16,6 @@
 #include "And64InlineHook/And64InlineHook.hpp"
 #include "Menu/Setup.h"
 
-
 //Target lib here
 #define targetLibName OBFUSCATE("libil2cpp.so")
 
@@ -31,15 +30,15 @@ struct Offsets {
 } Global;
 
 struct Variables {
+
+//GLOBAL
+const char *libname;
+
+//HEX PATCHER
+const char *offset;
+const char *hex;
     
-    //GLOBAL
-    const char *libname;
-    
-    //HEX PATCHER
-    const char *offset;
-    const char *hex;
-    
-    int SelectedHook;
+int SelectedHook;
 bool isFloat;
 bool isInt;
 bool isBool;
@@ -48,8 +47,6 @@ float HookFloatValue = 0.1;
 bool HookBoolValue = false;
 int HookIntValue = 0;
 const char *offsetToHook;
-
-
 
 //Hook Void
 int SelectedVoidHook;
@@ -62,8 +59,6 @@ bool HookVoidBoolValue = false;
 int HookVoidIntValue = 0;
 const char *offsetToUpdateVoid;
 const char *offsetToHookVoid;
- 
-
 
 //Hook Field Offset
 int SelectedFieldHook;
@@ -77,7 +72,6 @@ bool HookFieldBoolValue = false;
 int HookFieldIntValue = 0;
 const char *offsetToUpdateField;
 
-
 //Void Disable
 int SelectedOption;
 bool isVoidDisabled;
@@ -90,7 +84,6 @@ bool CallVoid;
 bool StartCalling;
 const char *callOffset;
 const char *updateOffset;
-
 
 //Easy Patcher
 int SelectedEasyTool;
@@ -107,7 +100,7 @@ const char *HexToPatchBool;
 const char *HexToPatchInt;
 const char *HexToPatchFloat;
 
- const char *BoolTrue = "00 00 A0 E3 1E FF 2F E1";
+const char *BoolTrue = "00 00 A0 E3 1E FF 2F E1";
 const char *BoolFalse = "01 00 A0 E3 1E FF 2F E1";
 
 const char *Int1 = "01 00 A0 E3 1E FF 2F E1";
@@ -127,7 +120,7 @@ const char *Float100 = "C8 02 44 E3 1E FF 2F E1";
 const char *Float1000 = "7a 04 44 e3 1e ff 2f e1";
 const char *Float2000 = "FA 04 44 E3 1E FF 2F E1";
 
-    
+
 } NM;
 
 
@@ -136,7 +129,6 @@ const char *Float2000 = "FA 04 44 E3 1E FF 2F E1";
      All Hook Functions Here
      
 */
-
 
 
 float (*_HookFloat)(void *instance);
@@ -289,7 +281,29 @@ void *hack_thread(void *) {
 
 #if defined(__aarch64__) 
 
+    // ✅ Bool
+    NM.BoolTrue  = "00 00 80 D2 C0 03 5F D6"; // MOV X0, #0; RET
+    NM.BoolFalse = "01 00 80 D2 C0 03 5F D6"; // MOV X0, #1; RET
 
+    // ✅ Int
+    NM.Int1      = "01 00 80 D2 C0 03 5F D6";
+    NM.Int10     = "0A 00 80 D2 C0 03 5F D6";
+    NM.Int50     = "32 00 80 D2 C0 03 5F D6";
+    NM.Int100    = "64 00 80 D2 C0 03 5F D6";
+    NM.Int999    = "E7 03 80 D2 C0 03 5F D6";
+    NM.Int1000   = "E8 03 80 D2 C0 03 5F D6";
+    NM.Int1M     = "40 42 0F D2 C0 03 5F D6"; // 1_000_000
+    NM.Int12M    = "80 9C B7 D2 C0 03 5F D6"; // 12_000_000
+
+    // ✅ Float (эмуляция через W0 — в некоторых случаях может не сработать как float!)
+    NM.Float1     = "00 00 80 52 C0 03 5F D6";
+    NM.Float2     = "02 00 80 52 C0 03 5F D6";
+    NM.Float40    = "28 00 80 52 C0 03 5F D6";
+    NM.Float99    = "63 00 80 52 C0 03 5F D6";
+    NM.Float100   = "64 00 80 52 C0 03 5F D6";
+    NM.Float1000  = "E8 03 80 52 C0 03 5F D6";
+    NM.Float2000  = "D0 07 80 52 C0 03 5F D6";
+    
 /*
 
      ARM64-V8A
@@ -297,8 +311,7 @@ void *hack_thread(void *) {
 */
 
 
-
-#else 
+#else
 
     
 /*
@@ -844,14 +857,9 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                      Toast(env, obj, "Current Offset Restored", ToastLength::LENGTH_LONG);
                   }
               }
-               break;
-            
-
-            
+               break;  
     }
 }
-
-
     
 /*
 
@@ -867,5 +875,3 @@ void lib_main() {
 }
 
 #include "RegisterMenu.h"
-
-
