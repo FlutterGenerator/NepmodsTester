@@ -378,7 +378,7 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
             OBFUSCATE("701_CollapseAdd_InputText_Enter Offset"),
             OBFUSCATE("702_CollapseAdd_Spinner_Select Value For Int _Off - 00, 1, 10, 50, 100, 999, 1000, 1M, 12M"),
             OBFUSCATE("703_CollapseAdd_Spinner_Select Value For Float_Off - 00, 1, 2, 40, 99, 100, 1000, 2000"),
-            OBFUSCATE("704_CollapseAdd_Spinner_Select Value For Bool_Off - 00, True - 00 00 A0 E3 1E FF 2F E1, False - 01 00 A0 E3 1E FF 2F E1"),
+            OBFUSCATE("704_CollapseAdd_Spinner_Select Value For Bool_Off - 00, True - 00 00 A0 E3 1E FF 2F E1, False - 01 00 A0 E3 1E FF 2F E1, True - 00 00 80 D2 C0 03 5F D6, False - 01 00 80 D2 C0 03 5F D6"),
             OBFUSCATE("705_CollapseAdd_Toggle_Start Patching"),
           
             
