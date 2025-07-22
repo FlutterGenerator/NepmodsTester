@@ -575,13 +575,11 @@ public class Menu {
                 }
         );
         //Set colors of the switch. Comment out if you don't like it
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                switchR.getThumbDrawable().setTintList(buttonStates);
-                switchR.getTrackDrawable().setTintList(buttonStates);
-            } catch (NullPointerException ex) {
-                Log.d(TAG, String.valueOf(ex));
-            }
+        try {
+            switchR.getThumbDrawable().setTintList(buttonStates);
+            switchR.getTrackDrawable().setTintList(buttonStates);
+        } catch (NullPointerException ex) {
+            Log.d(TAG, String.valueOf(ex));
         }
         switchR.setText(featName);
         switchR.setTextColor(TEXT_COLOR_2);
@@ -593,7 +591,7 @@ public class Menu {
                 switch (featNum) {
                     case -1: //Save perferences
                         Preferences.with(switchR.getContext()).writeBoolean(-1, bool);
-                        if (bool == false)
+                        if (!bool)
                             Preferences.with(switchR.getContext()).clear(); //Clear perferences if switched off
                         break;
                     case -3:
@@ -882,7 +880,7 @@ public class Menu {
             button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + ((num == 0) ? 1 : num) + "</font>"));
         } else {
             String string = Preferences.loadPrefString(featName, featNum);
-            edittextstring.setString((string == "") ? "" : string);
+            edittextstring.setString(string);
             button.setText(Html.fromHtml(featName + ": <font color='" + NumberTxtColor + "'>" + string + "</font>"));
         }
         button.setAllCaps(false);
@@ -893,9 +891,7 @@ public class Menu {
             @Override
             public void onClick(View view) {
                 final AlertDialog alert = new AlertDialog.Builder(getContext, 2).create();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    Objects.requireNonNull(alert.getWindow()).setType(Build.VERSION.SDK_INT >= 26 ? 2038 : 2002);
-                }
+                Objects.requireNonNull(alert.getWindow()).setType(Build.VERSION.SDK_INT >= 26 ? 2038 : 2002);
                 alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
                         InputMethodManager imm = (InputMethodManager) getContext.getSystemService(getContext.INPUT_METHOD_SERVICE);
@@ -1102,8 +1098,7 @@ public class Menu {
         final CheckBox checkBox = new CheckBox(getContext);
         checkBox.setText(featName);
         checkBox.setTextColor(TEXT_COLOR_2);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            checkBox.setButtonTintList(ColorStateList.valueOf(CheckBoxColor));
+        checkBox.setButtonTintList(ColorStateList.valueOf(CheckBoxColor));
         checkBox.setChecked(Preferences.loadPrefBool(featName, featNum, switchedOn));
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -1143,8 +1138,7 @@ public class Menu {
             System.out.println(lists.get(i));
             Radioo.setText(lists.get(i));
             Radioo.setTextColor(Color.LTGRAY);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                Radioo.setButtonTintList(ColorStateList.valueOf(RadioColor));
+            Radioo.setButtonTintList(ColorStateList.valueOf(RadioColor));
             Radioo.setOnClickListener(first_radio_listener);
             radioGroup.addView(Radioo);
         }

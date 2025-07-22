@@ -23,4 +23,3 @@
 -keepclassmembers class ** {
    public static void Start (***);
 }
--keep public class com.android.support.MainActivity

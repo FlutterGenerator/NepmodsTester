@@ -1,25 +1,24 @@
 buildscript {
     repositories {
         google()
-        mavenCentral() // ✅ jcenter() заменён
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.8.1'
+        classpath 'com.android.tools.build:gradle:8.11.1'
     }
 }
 
 allprojects {
     repositories {
         google()
-        mavenCentral() // ✅ jcenter() заменён
+        mavenCentral()
     }
 }
 
-// Добавляем обработку предупреждений о депрекейшене
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xlint:deprecation"
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

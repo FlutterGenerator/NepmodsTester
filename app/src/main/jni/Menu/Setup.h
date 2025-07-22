@@ -100,7 +100,6 @@ void CheckOverlayPermission(JNIEnv *env, jclass thiz, jobject ctx){
         }
     }
 
-
     LOGI(OBFUSCATE("Start service"));
 
     //StartMod Normal

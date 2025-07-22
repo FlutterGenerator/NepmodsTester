@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.content.Context;
-import Nepmods.Tester.CrashHandler;
-import Nepmods.Tester.Menu;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import android.util.Base64;
-import Nepmods.Tester.R;
 
 public class MainActivity extends Activity {
     static {
@@ -28,7 +26,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
 
         //To launch game activity
         if (!hasLaunched) {
@@ -50,8 +47,7 @@ public class MainActivity extends Activity {
 
         //Launch mod menu.
        // Main.StartWithoutPermission(this);
-        
-        
+
     private static native void CheckOverlayPermission(Context context);
 
     public static void StartWithoutPermission(Context context) {
@@ -71,12 +67,12 @@ public class MainActivity extends Activity {
         CrashHandler.init(context, false);
         cacheDir = context.getCacheDir().getPath() + "/";
 
-        writeToFile("img.png", Nepmods.Tester.NepmodsSecurity.background());
+        writeToFile(NepmodsSecurity.background());
         CheckOverlayPermission(context);
     }
         
-    private static void writeToFile(String name, String base64) {
-        File file = new File(cacheDir + name);
+    private static void writeToFile(String base64) {
+        File file = new File(cacheDir + "img.png");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -86,8 +82,7 @@ public class MainActivity extends Activity {
             fos.write(decode);
             fos.close();
         } catch (Exception e) {
-            
+
         }
     }
 }
-

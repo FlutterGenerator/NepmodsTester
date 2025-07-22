@@ -271,12 +271,10 @@ void *hack_thread(void *) {
     
     LOGI(OBFUSCATE("pthread created"));
 
-
     do {
         sleep(1);
     } while (!isLibraryLoaded(targetLibName));
 
- 
     LOGI(OBFUSCATE("%s has been loaded"), (const char *) targetLibName);
 
 #if defined(__aarch64__) 
@@ -295,7 +293,7 @@ void *hack_thread(void *) {
     NM.Int1M     = "40 42 0F D2 C0 03 5F D6"; // 1_000_000
     NM.Int12M    = "80 9C B7 D2 C0 03 5F D6"; // 12_000_000
 
-    // ✅ Float (эмуляция через W0 — в некоторых случаях может не сработать как float!)
+    // ✅ Float
     NM.Float1     = "00 00 80 52 C0 03 5F D6";
     NM.Float2     = "02 00 80 52 C0 03 5F D6";
     NM.Float40    = "28 00 80 52 C0 03 5F D6";
@@ -310,9 +308,7 @@ void *hack_thread(void *) {
      
 */
 
-
 #else
-
     
 /*
 
@@ -320,24 +316,20 @@ void *hack_thread(void *) {
      
 */
 
-
 #endif
-
 
     return NULL;
 }
-
 
 jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
     jobjectArray ret;
 
     const char *features[] = {
             OBFUSCATE("RedAlert_This Is Official V3 Version. Report Bugs For More Improvement"),
-            
             OBFUSCATE("1_InputText_Input Lib Name"),
             OBFUSCATE("2_Button_Set Lib"),
+
             OBFUSCATE("Collapse_Patch Offset"),
-            
             OBFUSCATE("100_CollapseAdd_InputText_Input Offset"),
             OBFUSCATE("101_CollapseAdd_InputText_Input Hex"),
             OBFUSCATE("102_CollapseAdd_Toggle_Patch"),
@@ -361,18 +353,17 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
             OBFUSCATE("402_CollapseAdd_InputValue_Enter Value To Hook"),
             OBFUSCATE("403_CollapseAdd_InputText_Enter Update Offset"),
             OBFUSCATE("404_CollapseAdd_Toggle_Hook Enable"),
-            
+
             OBFUSCATE("Collapse_Disable Void (Anticrash/Antidetect Tester)"),
             OBFUSCATE("500_CollapseAdd_RadioButton_Hook_OFF, Disactive Void"),
             OBFUSCATE("501_CollapseAdd_InputText_Enter Offset To Disable Void"),
             OBFUSCATE("502_CollapseAdd_Toggle_Hook Enable"),
-            
+
             OBFUSCATE("Collapse_Hook Call Void"),
             OBFUSCATE("600_CollapseAdd_RadioButton_Hook_OFF, Call Void"),
             OBFUSCATE("601_CollapseAdd_InputText_Enter Offset To Call Void"),
-            
             OBFUSCATE("602_CollapseAdd_Toggle_Hook Enable"),
-            
+
             OBFUSCATE("Collapse_Easy Patcher"),
             OBFUSCATE("700_CollapseAdd_Spinner_Choose Type_Off, Int, Float, Bool"),
             OBFUSCATE("701_CollapseAdd_InputText_Enter Offset"),
@@ -380,12 +371,9 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
             OBFUSCATE("703_CollapseAdd_Spinner_Select Value For Float_Off - 00, 1, 2, 40, 99, 100, 1000, 2000"),
             OBFUSCATE("704_CollapseAdd_Spinner_Select Value For Bool_Off - 00, True - 00 00 A0 E3 1E FF 2F E1, False - 01 00 A0 E3 1E FF 2F E1, True - 00 00 80 D2 C0 03 5F D6, False - 01 00 80 D2 C0 03 5F D6"),
             OBFUSCATE("705_CollapseAdd_Toggle_Start Patching"),
-          
-            
+
             OBFUSCATE("ButtonLink_Report Bug_https://t.me/nepmods"),
-            
-            
-            
+
     };
     int Total_Feature = (sizeof features / sizeof features[0]);
     ret = (jobjectArray)
@@ -409,27 +397,19 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
     switch (featNum) {
         
         case 1:
-            
             NM.libname = env->GetStringUTFChars(str, 0);
-            
             break;
             
         case 2:
-            
             Toast(env,obj,NM.libname,ToastLength::LENGTH_LONG);
-            
             break;
             
         case 100:
-            
              NM.offset = env->GetStringUTFChars(str, 0);
-            
             break;
             
          case 101:
-             
               NM.hex = env->GetStringUTFChars(str, 0);
-             
             break;
          
          case 102:
@@ -438,12 +418,10 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
              } else {
                  NepRestore(NM.libname, NM.offset);
              }
-              
             break;
          
             case 103:
               Toast(env, obj, OBFUSCATE("Restore Coming Soon"), ToastLength::LENGTH_LONG);
-              
           break;
           case 200:
               NM.SelectedHook = value;
@@ -498,7 +476,6 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                    }
             break;
             case 203:
-                   
                    NM.StartHook = boolean;
                    if(NM.StartHook) {
                        if(NM.isFloat) {
@@ -515,31 +492,27 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                            NepmodsHook(NM.libname, NM.offsetToHook, HookInt,_HookInt);
                   
                            Toast(env, obj, "Hooking Int", ToastLength::LENGTH_LONG);
-                  
                        }
                    }
             break;
             case 300:
                    NM.SelectedVoidHook = value;
                if (NM.SelectedVoidHook == 1) {
-                   
                    NM.isVoidBool = false;
                    NM.isVoidInt = false;
                    NM.isVoidFloat = false;
                } else if(NM.SelectedVoidHook == 2) {
-                   
                    NM.isVoidBool = true;
                    NM.isVoidInt = false;
                    NM.isVoidFloat = false;
                    Toast(env, obj, "Hooking Void Bool", ToastLength::LENGTH_LONG);
                   
                }else if(NM.SelectedVoidHook == 3) {
-                   
                    NM.isVoidBool = false;
                    NM.isVoidInt = true;
                    NM.isVoidFloat = false;
                    Toast(env, obj, "Hooking Void Int", ToastLength::LENGTH_LONG);
-                  
+
                }else if(NM.SelectedVoidHook == 4) {
                    NM.isVoidBool = false;
                    NM.isVoidInt = false;
@@ -551,28 +524,23 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                    NM.isVoidInt = false;
                    NM.isVoidFloat = false;
                }
-                   
              break;
              case 301:
                    NM.offsetToHookVoid = env->GetStringUTFChars(str, 0);
-                   
+
                    if(NM.isVoidFloat) {
                        
-                         PatchVoidFloat = (void (*)(void *, float))getAbsoluteAddress(NM.libname, string2Offset(NM.offsetToHookVoid));
+                       PatchVoidFloat = (void (*)(void *, float))getAbsoluteAddress(NM.libname, string2Offset(NM.offsetToHookVoid));
                          
                    } else if(NM.isVoidBool) {
                            PatchVoidBool = (void (*)(void *, bool))getAbsoluteAddress(NM.libname, string2Offset(NM.offsetToHookVoid));
-                         
-                           
-                       } else if(NM.isVoidInt) {
+
+                   } else if(NM.isVoidInt) {
                            PatchVoidInt = (void (*)(void *, int))getAbsoluteAddress(NM.libname, string2Offset(NM.offsetToHookVoid));
-                         
-                           
-                           
+
                        }
                break;
                case 302:
-                                     
                    if(NM.isVoidFloat) {
                        NM.HookVoidFloatValue = (float) value;
                    } else if(NM.isVoidBool) {
@@ -586,7 +554,6 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                        
                    } else if(NM.isVoidInt) {
                        NM.HookVoidIntValue = (int) value;
-   
                    }
              break;
              case 303:
@@ -599,7 +566,6 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                        } else if(NM.isVoidFloat) {
                            
                            NepmodsHook(NM.libname, NM.offsetToUpdateVoid, HookVoidFloat,_HookVoidFloat);
-                     
                        }
             break;
             case 304:
@@ -623,18 +589,15 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
            case 400:
                NM.SelectedFieldHook = value;
                if (NM.SelectedFieldHook == 1) {
-                   
                    NM.isFieldBool = false;
                    NM.isFieldInt = false;
                    NM.isFieldFloat = false;
                } else if(NM.SelectedFieldHook == 2) {
-                   
                    NM.isFieldBool = true;
                    NM.isFieldInt = false;
                    NM.isFieldFloat = false;
                    
                }else if(NM.SelectedFieldHook == 3) {
-                   
                    NM.isFieldBool = false;
                    NM.isFieldInt = true;
                    NM.isFieldFloat = false;
@@ -857,16 +820,14 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
                      Toast(env, obj, "Current Offset Restored", ToastLength::LENGTH_LONG);
                   }
               }
-               break;  
+               break;
     }
 }
-    
-/*
 
+/*
      Ignore All code Down From Here
      
 */
-
 
 __attribute__((constructor))
 void lib_main() {
