@@ -15,11 +15,10 @@
 #include "KittyMemory/MemoryPatch.h"
 #include "And64InlineHook/And64InlineHook.hpp"
 #include "Menu/Setup.h"
+#include "Includes/Macros.h"
 
 //Target lib here
 #define targetLibName OBFUSCATE("libil2cpp.so")
-
-#include "Includes/Macros.h"
 
 struct Hacks {
     
