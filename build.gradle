@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.12.0'
+        classpath 'com.android.tools.build:gradle:8.12.1'
     }
 }
 
@@ -22,3 +22,4 @@ tasks.withType(JavaCompile).configureEach {
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
+
