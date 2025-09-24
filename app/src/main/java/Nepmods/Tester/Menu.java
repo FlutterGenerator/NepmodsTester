@@ -5,7 +5,6 @@ package Nepmods.Tester;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,37 +51,19 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.res.AssetManager;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.File;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.widget.RelativeLayout.ALIGN_PARENT_LEFT;
 import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
 import static Nepmods.Tester.MainActivity.cacheDir;
-import org.xml.sax.ErrorHandler;
-import java.io.IOException;
-import java.io.InputStream;
+
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import java.net.HttpURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.net.URL;
-import android.os.AsyncTask;
-import android.annotation.SuppressLint;
-import java.io.InputStreamReader;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.CheckBox;
-import Nepmods.Tester.MainActivity;
 
 public class Menu {
     //********** Here you can easly change the menu appearance **********//
