@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "Nepmods.Tester"
-    compileSdkVersion = 36
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "Nepmods.Tester"
-        minSdkVersion 21
-        targetSdkVersion 36
+        minSdk = 21
+        targetSdk = 36
         versionCode = 35
         versionName = "V3"
         ndk {
