@@ -1,71 +1,60 @@
 plugins {
-    id("com.android.application")
+    id 'com.android.application'
 }
 
 android {
-    namespace = "Nepmods.Tester"
-    compileSdk = 36
+    namespace "Nepmods.Tester"
+    compileSdk 36
 
     defaultConfig {
         applicationId = "Nepmods.Tester"
-        minSdk = 21
-        targetSdk = 36
-        versionCode = 35
-        versionName = "V3"
+        minSdk 21
+        targetSdk 36
+        versionCode 35
+        versionName "V3"
 
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64", "x86")
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86_64", "x86"
         }
     }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-
     signingConfigs {
-        getByName("debug") {
-            storeFile = file("HunMod.jks")
-            storePassword = "HunMod"
-            keyAlias = "HunMod"
-            keyPassword = "HunMod"
+        debug {
+            storeFile file("HunMod.jks")
+            storePassword "HunMod"
+            keyAlias "HunMod"
+            keyPassword "HunMod"
         }
-        create("release") {
-            storeFile = file("HunMod.jks")
-            storePassword = "HunMod"
-            keyAlias = "HunMod"
-            keyPassword = "HunMod"
+        release {
+            storeFile file("HunMod.jks")
+            storePassword "HunMod"
+            keyAlias "HunMod"
+            keyPassword "HunMod"
         }
     }
-
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("release")
-            isDebuggable = false
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+            debuggable false
         }
-        getByName("debug") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("debug")
-            isDebuggable = true
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.debug
+            debuggable true
         }
     }
-
     externalNativeBuild {
         ndkBuild {
-            path = file("src/main/jni/Android.mk")
+            path file("src/main/jni/Android.mk")
         }
     }
 }
-
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 }
