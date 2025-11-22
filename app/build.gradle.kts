@@ -24,7 +24,7 @@ android {
     }
 
     signingConfigs {
-        create("debug") {
+        getByName("debug") {
             storeFile = file("HunMod.jks")
             storePassword = "HunMod"
             keyAlias = "HunMod"
