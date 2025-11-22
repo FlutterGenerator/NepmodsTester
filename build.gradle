@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.13.1")
+        classpath 'com.android.tools.build:gradle:8.13.1'
     }
 }
 
@@ -15,10 +15,11 @@ allprojects {
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.add("-Xlint:deprecation")
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:deprecation"
 }
 
-tasks.register<Delete>("clean") {
-    delete(rootProject.buildDir)
+tasks.register('clean', Delete) {
+    delete rootProject.buildDir
 }
+
