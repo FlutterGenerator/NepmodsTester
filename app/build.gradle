@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "Nepmods.Tester"
-    compileSdk 36
+    namespace 'Nepmods.Tester'
+    compileSdkVersion 36
 
     defaultConfig {
-        applicationId = "Nepmods.Tester"
-        minSdk 21
-        targetSdk 36
+        applicationId "Nepmods.Tester"
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 35
         versionName "V3"
 
@@ -17,10 +17,12 @@ android {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86_64", "x86"
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
     signingConfigs {
         debug {
             storeFile file("HunMod.jks")
@@ -35,26 +37,29 @@ android {
             keyPassword "HunMod"
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            signingConfig = signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
             debuggable false
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            signingConfig = signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
             debuggable true
         }
     }
+
     externalNativeBuild {
         ndkBuild {
-            path file("src/main/jni/Android.mk")
+            path file('src/main/jni/Android.mk')
         }
     }
 }
+
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
