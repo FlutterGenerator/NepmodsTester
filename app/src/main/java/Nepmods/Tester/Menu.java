@@ -71,9 +71,9 @@ public class Menu {
     //region Variable
     public static final String TAG = "Mod_Menu"; //Tag for logcat
 
-    int TEXT_COLOR = Color.parseColor("#82CAFD");
-    int TEXT_COLOR_2 = Color.parseColor("#FFFFFF");
-    int BTN_COLOR = Color.parseColor("#1C262D");
+    int TEXT_COLOR = Color.parseColor("#FF82CAFD");
+    int TEXT_COLOR_2 = Color.parseColor("#FFFFFFFF");
+    int BTN_COLOR = Color.parseColor("#FF1C262D");
     int MENU_BG_COLOR = Color.parseColor("#EE1C2A35"); //#AARRGGBB
     int MENU_FEATURE_BG_COLOR = Color.parseColor("#DD141C22"); //#AARRGGBB
     int MENU_WIDTH = 340;
@@ -87,14 +87,14 @@ public class Menu {
     float ICON_ALPHA = 0.7f; //Transparent
     int ToggleON = Color.GREEN;
     int ToggleOFF = Color.RED;
-    int BtnON = Color.parseColor("#1b5e20");
-    int BtnOFF = Color.parseColor("#7f0000");
-    int CategoryBG = Color.parseColor("#2F3D4C");
-    int SeekBarColor = Color.parseColor("#80CBC4");
-    int SeekBarProgressColor = Color.parseColor("#80CBC4");
-    int CheckBoxColor = Color.parseColor("#80CBC4");
-    int RadioColor = Color.parseColor("#FFFFFF");
-    String NumberTxtColor = "#41c300";
+    int BtnON = Color.parseColor("#FF1B5E20");
+    int BtnOFF = Color.parseColor("#FF7F0000");
+    int CategoryBG = Color.parseColor("#FF2F3D4C");
+    int SeekBarColor = Color.parseColor("#FF80CBC4");
+    int SeekBarProgressColor = Color.parseColor("#FF80CBC4");
+    int CheckBoxColor = Color.parseColor("#FF80CBC4");
+    int RadioColor = Color.parseColor("#FFFFFFFF");
+    String NumberTxtColor = "#FF41C300";
     //********************************************************************//
 
     RelativeLayout mCollapsed, mRootContainer;
@@ -146,8 +146,8 @@ public class Menu {
         mExpanded.setLayoutParams(new LinearLayout.LayoutParams(dp(300), dp(360)));
         GradientDrawable gdMenuBody = new GradientDrawable();
         gdMenuBody.setCornerRadius(MENU_CORNER); //Set corner
-        gdMenuBody.setColor(Color.parseColor("#d500f9"));
-        gdMenuBody.setStroke(10, Color.parseColor("#9c26b0")); //Set border
+        gdMenuBody.setColor(Color.parseColor("#FFD500F9"));
+        gdMenuBody.setStroke(10, Color.parseColor("#FF9C26B0")); //Set border
         //mExpanded.setBackground(gdMenuBody); //Apply GradientDrawable to it
         mExpanded.setBackground(Drawable.createFromPath(cacheDir + "img.png"));
         //********** The icon to open mod menu **********
@@ -962,7 +962,7 @@ public class Menu {
                 btndialog.setBackground(DAJHEFD);
                 android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
                 HGFDACI.setCornerRadius(100);
-                HGFDACI.setColor(Color.parseColor("#0000ffff"));
+                HGFDACI.setColor(Color.parseColor("#0000FFFF"));
                 HGFDACI.setStroke(2, Color.parseColor("GREEN"));
                 android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
 
@@ -976,7 +976,7 @@ public class Menu {
         linearLayout.addView(button);
         android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
         HGFDACI.setCornerRadius(100);
-        HGFDACI.setColor(Color.parseColor("#0000ffff"));
+        HGFDACI.setColor(Color.parseColor("#0000FFFF"));
         HGFDACI.setStroke(2, Color.parseColor("GREEN"));
         android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
 
@@ -1001,7 +1001,7 @@ public class Menu {
         button.setTextColor(TEXT_COLOR);
         android.graphics.drawable.GradientDrawable HGFDACI = new android.graphics.drawable.GradientDrawable();HGFDACI.setColor(Color.argb(255,255,255,255));
         HGFDACI.setCornerRadius(100);
-        HGFDACI.setColor(Color.parseColor("#0000ffff"));
+        HGFDACI.setColor(Color.parseColor("#0000FFFF"));
         HGFDACI.setStroke(2, Color.parseColor("GREEN"));
         android.graphics.drawable.RippleDrawable HGFDACI_RE = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{ trans}), HGFDACI, null);
 
@@ -1150,7 +1150,7 @@ public class Menu {
         mCollapse = collapseSub;
         final android.graphics.drawable.GradientDrawable DAJHEFD = new android.graphics.drawable.GradientDrawable();
         DAJHEFD.setColor(trans);
-        DAJHEFD.setStroke(3, Color.parseColor("#e64918"));
+        DAJHEFD.setStroke(3, Color.parseColor("#FFE64918"));
         DAJHEFD.setCornerRadii(new float[] { 50, 50, 30, 30, 30, 30, 30, 30 });
         collapse.setBackground(DAJHEFD);
 
@@ -1165,7 +1165,7 @@ public class Menu {
         if (expanded) {
             collapseSub.setVisibility(View.VISIBLE);
             textView.setText( text + " △");
-            DAJHEFD.setStroke(3, Color.parseColor("#3c5afe"));
+            DAJHEFD.setStroke(3, Color.parseColor("#FF3C5AFE"));
 
         }
 
@@ -1180,13 +1180,13 @@ public class Menu {
                 if (z) {
                     collapseSub.setVisibility(View.VISIBLE);
                     textView.setText(text + " △");
-                    DAJHEFD.setStroke(3, Color.parseColor("#3c5afe"));
+                    DAJHEFD.setStroke(3, Color.parseColor("#FF3C5AFE"));
 
                     return;
                 }
                 collapseSub.setVisibility(View.GONE);
                 textView.setText(text + " ▽");
-                DAJHEFD.setStroke(3, Color.parseColor("#e64918"));
+                DAJHEFD.setStroke(3, Color.parseColor("#FFE64918"));
 
             }
         });
