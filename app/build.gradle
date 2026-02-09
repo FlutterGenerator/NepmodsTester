@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'Nepmods.Tester'
+    namespace = 'Nepmods.Tester'
     compileSdkVersion 36
 
     defaultConfig {
@@ -42,13 +42,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
             debuggable false
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
             debuggable true
         }
     }
