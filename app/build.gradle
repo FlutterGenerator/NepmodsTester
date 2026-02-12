@@ -1,16 +1,16 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.android.application)
 }
 
 android {
-    namespace = 'Nepmods.Tester'
+    namespace = "Nepmods.Tester"
     compileSdkVersion 36
 
     defaultConfig {
         applicationId "Nepmods.Tester"
         minSdkVersion 24
         targetSdkVersion 36
-        versionCode 35
+        versionCode 36
         versionName "V3"
 
         ndk {
