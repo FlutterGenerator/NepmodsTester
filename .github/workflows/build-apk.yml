@@ -30,7 +30,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build APK
-        run: ./gradlew assemble${{ matrix.build_type }} --warning-mode all
+        run: ./gradlew assemble${{ matrix.build_type }}
 
       - name: Upload Gradle Problem Report
         uses: actions/upload-artifact@v6
