@@ -14,29 +14,39 @@ jobs:
 
     strategy:
       matrix:
-        build_type: [Debug, Release]  # Use capitalized to match Gradle tasks
+        build_type: [Debug, Release]  # регистр соответствует Gradle задачам
 
     steps:
+      # 1️⃣ Проверяем код
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      # 2️⃣ Настраиваем JDK 11
       - name: Set up JDK 11
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '11'
 
+      # 3️⃣ Делаем gradlew исполняемым
       - name: Ensure gradlew is executable
         run: chmod +x ./gradlew
 
+      # 4️⃣ Проверка Gradle Wrapper
       - name: Verify Gradle Wrapper
         run: |
           ./gradlew --version
           ls -l gradle/wrapper/
 
+      # 5️⃣ Сборка APK
       - name: Build APK
         run: ./gradlew assemble${{ matrix.build_type }} --warning-mode all
 
+      # 6️⃣ Список файлов после сборки (для диагностики)
+      - name: List APK files
+        run: ls -R app/build/outputs/apk/
+
+      # 7️⃣ Загружаем Gradle Problem Report (если есть)
       - name: Upload Gradle Problem Report
         uses: actions/upload-artifact@v6
         with:
@@ -44,6 +54,7 @@ jobs:
           path: build/reports/problems/
           if-no-files-found: warn
 
+      # 8️⃣ Загружаем APK как артефакт
       - name: Upload APK
         uses: actions/upload-artifact@v6
         with:
