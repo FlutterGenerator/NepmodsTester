@@ -1,15 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id 'com.android.application'
 }
 
 android {
     namespace = "Nepmods.Tester"
-    compileSdkVersion 36
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "Nepmods.Tester"
         minSdkVersion 24
-        targetSdkVersion 36
+        targetSdkVersion 33
         versionCode 36
         versionName "V3"
 
@@ -19,8 +19,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     signingConfigs {
@@ -43,13 +43,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig = signingConfigs.release
-            debuggable false
+
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig = signingConfigs.debug
-            debuggable true
         }
     }
 
@@ -58,8 +57,9 @@ android {
             path file('src/main/jni/Android.mk')
         }
     }
+  //  ndkVersion '21.4.7075529'
 }
 
 dependencies {
-  //  implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
